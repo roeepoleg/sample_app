@@ -30,13 +30,14 @@ describe "UserPages" do
     let(:submit) { "Create my account" }
 
     describe "with invalid information" do
+      it "should not create a user" do
+        expect { click_button submit }.not_to change(User, :count)
+      end
+    end
+
+    describe "with invalid information - test result error html" do
 
       before { click_button submit }
-
-      it "should not create a user" do
-        expect { }.not_to change(User, :count)
-      end
-
       it { should have_selector('div.alert.alert-error') }
 
     end
