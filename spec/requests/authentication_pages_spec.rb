@@ -29,11 +29,12 @@ describe "Authentication" do
 	    describe "submission with valid information" do
 
 	    	let(:user) { FactoryGirl.create(:user) }
-	    	beforfe ( valid_signin user )
+	    	
+	    	before { valid_signin(user) }
 
 	    	it { should have_title(user.name) }
 	    	it { should have_link('Profile',     	href: user_path(user)) }
-	    	it { should have_link('Sign out',     	href: signout_path(user) )}
+	    	it { should have_link('Sign out',     	href: signout_path(user)) }
 	    	it { should have_no_link('Sign in',		href: signin_path(user)) }
 
 	    	describe "followed by signout" do
