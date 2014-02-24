@@ -43,6 +43,13 @@ describe "Authentication" do
 		    	it { should have_link('Sign in') }
 		    end
 		end
+
+		describe "when user not logged-in" do
+		  
+	      it { should have_no_link('Settings') }
+	      it { should have_no_link('Profile') }
+	      it { should have_link('Sign in') }
+		end
 	end
 
 	describe "authorization" do
@@ -66,9 +73,10 @@ describe "Authentication" do
 		  describe "when attempting to visit a protected page" do
 	        before do
 		      visit edit_user_path(user)
-		      fill_in "email",    with: user.email
-		      fill_in "password", with: user.password
-		      click_button "Sign in"
+		      # fill_in "email",    with: user.email
+		      # fill_in "password", with: user.password
+		      # click_button "Sign in"
+		      valid_signin(user)
 		    end
 
 	        describe "after signing in" do
@@ -117,6 +125,20 @@ describe "Authentication" do
 	        specify { expect(response).to redirect_to(root_url) }
 	      end
 
+	      describe "should not access new action" do
+	      	before { get new_user_path }
+	      	specify { expect(response).to redirect_to(root_url) }
+	      end
+
+	      describe "should not access create action" do
+	      	let(:params) do
+		      { user: { admin: true, password: user.password,
+		                password_confirmation: user.password } }
+		    end
+	      	before { post users_path(params)}
+	      	specify { expect(response).to redirect_to(root_url) }
+	      end
+
 	    end
-  end
+  	end
 end
