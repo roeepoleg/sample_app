@@ -31,6 +31,10 @@ describe "Static pages" do
           expect(page).to have_selector("li##{item.id}", text: item.content)
         end
       end
+
+      describe "it should have 2 posts in the sidebar counter" do
+        it { should have_selector("span", text: "#{user.feed.length} microposts") }
+      end
     end
   end
 
