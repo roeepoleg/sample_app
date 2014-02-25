@@ -18,6 +18,10 @@ class MicropostsController < ApplicationController
     redirect_to root_url
   end
 
+  # def from_users_followed_by(user)
+    
+  # end
+
   private 
 
   def micropost_params
